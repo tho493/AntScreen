@@ -1,0 +1,6 @@
+id=antscreen
+name=AntScreen Engine
+version=1.0.0
+versionCode=1
+author=tho493
+description=Zygisk module for AntScreen. Injects into Android Auto (gearhead) and system_server to mirror Android screen with direct app launch support.

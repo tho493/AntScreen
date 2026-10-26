@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.AntScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#2196F3</item>
+        <item name="colorPrimaryVariant">#1976D2</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+    </style>
+</resources>

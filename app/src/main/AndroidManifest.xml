@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <queries>
+        <package android:name="com.google.android.projection.gearhead" />
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
+
+    <application
+        android:allowBackup="false"
+        android:icon="@drawable/ic_launcher_logo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AntScreen">
+
+        <!-- Xposed / LSPosed Module Configuration -->
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true" />
+        <meta-data
+            android:name="xposeddescription"
+            android:value="AntScreen: Phản chiếu màn hình và hỗ trợ mở app trực tiếp trên Android Auto" />
+        <meta-data
+            android:name="xposedminversion"
+            android:value="82" />
+        <meta-data
+            android:name="xposedscope"
+            android:resource="@array/xposed_scope" />
+
+        <!-- Android Auto Metadata -->
+        <meta-data
+            android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc" />
+
+        <!-- Splash Screen Activity -->
+        <activity
+            android:name=".ui.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Main Settings Activity on Phone -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <!-- Injected App Selection & Management Activity -->
+        <activity
+            android:name=".ui.AppListActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+
+        <!-- Condition Detail Activity -->
+        <activity
+            android:name=".ui.ConditionDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Provider chia sẻ danh sách Injected Apps cho Gearhead & System -->
+        <provider
+            android:name=".provider.InjectedAppsProvider"
+            android:authorities="com.tho493.antscreen.injectedapps"
+            android:exported="true"
+            android:multiprocess="false" />
+
+        <!-- Android Auto Projection Service -->
+        <service
+            android:name=".service.AaActivityService"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@drawable/ic_launcher_logo"
+            android:label="@string/app_name"
+            android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+            </intent-filter>
+        </service>
+
+        <!-- Android Auto Injected App Slots (0-49) -->
+        <service android:name=".service.InjectedAppServices$Slot_0" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_0" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_1" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_1" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_2" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_2" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_3" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_3" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_4" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_4" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_5" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_5" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_6" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_6" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_7" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_7" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_8" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_8" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_9" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_9" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_10" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_10" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_11" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_11" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_12" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_12" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_13" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_13" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_14" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_14" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_15" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_15" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_16" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_16" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_17" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_17" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_18" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_18" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_19" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_19" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_20" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_20" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_21" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_21" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_22" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_22" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_23" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_23" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_24" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_24" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_25" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_25" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_26" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_26" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_27" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_27" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_28" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_28" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_29" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_29" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_30" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_30" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_31" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_31" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_32" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_32" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_33" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_33" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_34" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_34" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_35" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_35" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_36" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_36" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_37" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_37" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_38" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_38" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_39" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_39" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_40" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_40" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_41" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_41" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_42" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_42" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_43" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_43" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_44" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_44" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_45" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_45" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_46" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_46" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_47" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_47" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_48" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_48" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.InjectedAppServices$Slot_49" android:enabled="false" android:exported="true" android:icon="@drawable/ic_launcher_logo" android:label="@string/slot_49" android:process=":projection">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_NAVIGATION" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>
+

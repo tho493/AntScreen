@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FBF9F5"
+    android:orientation="vertical">
+
+    <!-- Top App Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp">
+
+        <FrameLayout
+            android:id="@+id/btn_back"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:contentDescription="Quay lại"
+                android:src="@drawable/ic_arrow_back"
+                app:tint="#1F2937" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_detail_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="Chi tiết điều kiện"
+                android:textColor="#1F2937"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_detail_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AntScreen Pre-flight Check"
+                android:textColor="#6B7280"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/btn_refresh_detail"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:contentDescription="Làm mới"
+                android:src="@drawable/ic_refresh"
+                app:tint="#6B7280" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="40dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="12dp">
+
+            <!-- Hero Status Banner -->
+            <LinearLayout
+                android:id="@+id/banner_detail_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_banner_success"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <FrameLayout
+                    android:id="@+id/container_detail_icon"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_circle_icon_check">
+
+                    <ImageView
+                        android:id="@+id/iv_detail_status_icon"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_check" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_status_headline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Tình trạng: Sẵn sàng"
+                        android:textColor="#15803D"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tv_status_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:lineSpacingExtra="2dp"
+                        android:text="Mục này đã đạt chuẩn yêu cầu để kết nối và phản chiếu màn hình."
+                        android:textColor="#374151"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Card: Thông số kỹ thuật -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.05"
+                android:text="THÔNG TIN CHI TIẾT"
+                android:textColor="#6B7280"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:id="@+id/card_params_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ant_card"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <!-- Các dòng key-value sẽ được add tự động trong code -->
+            </LinearLayout>
+
+            <!-- Card Action: Android Auto -->
+            <LinearLayout
+                android:id="@+id/section_aa_actions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_ant_card"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Cài đặt Android Auto 17.6"
+                    android:textColor="#1F2937"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:lineSpacingExtra="2dp"
+                    android:text="Tải bản Android Auto 17.6 chính thức từ APKMirror và chọn file đã tải để ứng dụng tự động cài đặt qua Root."
+                    android:textColor="#6B7280"
+                    android:textSize="13sp" />
+
+                <!-- Bước 1: Mở APKMirror -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_open_apkmirror_aa"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="#0284C7"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="1. Tải Android Auto 17.6 trên APKMirror"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_open_in_browser"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp" />
+
+                <!-- Bước 2: Chọn file APK đã tải để cài đặt -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_pick_local_apk_aa"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="#2563EB"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="2. Chọn file APK đã tải để cài đặt"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_download"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp" />
+
+                <!-- Tiến trình cài đặt -->
+                <LinearLayout
+                    android:id="@+id/container_aa_download_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ProgressBar
+                        android:id="@+id/pb_aa_download"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/bg_pill_selected" />
+
+                    <TextView
+                        android:id="@+id/tv_aa_download_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Đang xử lý..."
+                        android:textColor="#2563EB"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Card Action: Mirror Engine -->
+            <LinearLayout
+                android:id="@+id/section_engine_actions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_ant_card"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Quản trị Mirror Engine"
+                    android:textColor="#1F2937"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:lineSpacingExtra="2dp"
+                    android:text="Triển khai module Magisk Zygisk trực tiếp từ ứng dụng và khởi động lại thiết bị để nạp toàn bộ module."
+                    android:textColor="#6B7280"
+                    android:textSize="13sp" />
+
+                <!-- Action button: Deploy Mirror Engine -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_deploy_mirror_engine"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="#059669"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Deploy Mirror Engine"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_extension"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp" />
+
+                <!-- Tiến trình nạp module -->
+                <LinearLayout
+                    android:id="@+id/container_engine_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ProgressBar
+                        android:id="@+id/pb_engine_deploy"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:max="100"
+                        android:progress="0" />
+
+                    <TextView
+                        android:id="@+id/tv_engine_deploy_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Đang triển khai..."
+                        android:textColor="#059669"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <!-- Nút khởi động lại System Framework -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_restart_framework"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Khởi động lại thiết bị"
+                    android:textAllCaps="false"
+                    android:textColor="#374151"
+                    android:textSize="14sp"
+                    app:cornerRadius="14dp"
+                    app:strokeColor="#D1D5DB" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

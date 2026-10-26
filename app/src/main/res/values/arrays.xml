@@ -1,0 +1,6 @@
+<resources>
+    <string-array name="xposed_scope">
+        <item>system_server</item>
+        <item>com.google.android.projection.gearhead</item>
+    </string-array>
+</resources>
